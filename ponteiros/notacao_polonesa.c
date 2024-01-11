@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct no
 {
@@ -73,4 +74,14 @@ float resolver_expressao(char x[]){
         pt = strtok(NULL, " ");
     }
     n1 = desempilhar(&pilha);
+    num = n1->valor;
+    free(n1);
+    return num;
+}
+
+int main(){
+    char exp[50] = {"5 3 2 1 6 7 1 + * + * + *"};
+
+    printf("Resultado de %s:\t", exp);
+    printf("%f\n", resolver_expressao(exp));
 }
