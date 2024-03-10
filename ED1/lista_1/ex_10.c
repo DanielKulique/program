@@ -1,27 +1,17 @@
+//Faça um programa que receba uma palavra e a imprima de trás-para-frente.
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(){
-   int i, acc=0,j;
-    char a;
-   for(i=1;i<10;i++){
-        for(j=0;j<i;j++)
-            acc-=1;
-   }
-   scanf("%d", &a);
-   printf("%d", acc);
-
-    switch(1) 
-{
-    case 1;
-    printf("O valor eh 10 "); 
-    break;
-    case 2; 
-   	printf("O valor eh 20 "); 
- 	break; 
-default; 
-   	printf("O valor não eh 10 nem 20"); 
-  	break;
-} 
-
+    int i, tamanho;
+    char string[10];
+    printf("\nDigite Sua String: ");
+    scanf("%s", string);
+    tamanho = strlen(string);
+    
+    for(i=tamanho; i>=0; i--){
+        printf("%c", string[i]);
+    }
 }
