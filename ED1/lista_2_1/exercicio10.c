@@ -4,21 +4,21 @@
 #include <stdlib.h>
 
 int *alocar_memoria(int tamanho);
-void desaloca(int *p);
-int *strTam(char *str);
-char *strCopia(char *str, int *tam);
-char *strBaixo(char *str, int *tam);
-char *strAlto(char *str, int *tam);
-char *strConcatena(char *str1, char *str2, int *tam);
+void desaloca(char **p);
+int strTam(char *str);
+char *strCopia(char *str, int tam);
+char *strBaixo(char *str, int tam);
+char *strAlto(char *str, int tam);
+char *strConcatena(char *str1, char *str2, int tam);
 
 int main(){
 	char string[] = "Frase de teste";
 	char string2[] = "Cotinuacao Frase";
-	int *tama;
+	int tama;
 	char *copi=NULL, *minus=NULL, *maius=NULL, *nova_frase=NULL;
 	tama = strTam(string);
-	printf("\nTamanho %d", *tama);
-	copi = strCopia(string, tama);
+	printf("\nTamanho %d", tama);
+	copi = strCopia(string, tama); //tama = endereço de tama
 	minus = strBaixo(string, tama);
 	maius = strAlto(string, tama);
 	nova_frase = strConcatena(string, string2, tama);
@@ -26,7 +26,10 @@ int main(){
 	printf("\nMinuscula %s", minus);
 	printf("\nMaiuscula %s", maius);
 	printf("\nFrase Contatena %s", nova_frase);
-	desaloca(tama);
+	desaloca(&copi);
+	desaloca(&minus);
+	desaloca(&maius);
+	desaloca(&nova_frase);
 	return 0;
 }
 
@@ -40,55 +43,50 @@ int *alocar_memoria(int tamanho)
 		return NULL;
 }
 
-void desaloca(int *p)
+void desaloca(char **p)
 {
-	if(p)
+	if(*p)
 	{
-		free(p);
-		p = NULL;
+		free(*p);
+		*p = NULL;
 	}
 }
 
-int *strTam(char *str)
+int strTam(char *str) //retorna um inteiro;
 {
-	int tamanho = 0, *tam=NULL;
-	tam = alocar_memoria(1);
-	if (tam != NULL) {
-        	while (str[tamanho] != '\0') 
+	int tamanho=0;
+       	while (str[tamanho] != '\0') 
         {
         	tamanho++;
         }
-        *tam = tamanho;
-    	}
-
-	return tam;
+	return tamanho;
 }
-char *strCopia(char *str, int *tam)
+char *strCopia(char *str, int tam)//
 {
 	int i=0; 
 	char *copia=NULL;
-	copia = (char *)malloc(*tam*sizeof(char));
+	copia = (char *)malloc(tam*sizeof(char));
 	if(copia){
 		while(str[i] != '\0'){
 			copia[i] = str[i];
 			i++;
 		}
 		copia[i] = '\0';
-		return copia;
+		return copia; //PRECISA DESALOCAR
 	}
 	else
 		return NULL;
 }
 
-char *strBaixo(char *str, int *tam)
+char *strBaixo(char *str, int tam)
 {
 	int i=0, j=0;
 	char *caixa_baixa=NULL;
-	caixa_baixa = (char *)malloc(*tam*sizeof(char));
+	caixa_baixa = (char *)malloc(tam*sizeof(char));
 	
 	if(caixa_baixa){
 		while(str[i] != '\0'){
-			for(j=0;j<*tam;j++){
+			for(j=0;j<tam;j++){
 				if ((int)str[j] >= 'A' && (int)str[j] <= 'Z')
 					caixa_baixa[j] = (((int)str[j])+32);
 				else
@@ -97,21 +95,21 @@ char *strBaixo(char *str, int *tam)
 			i++;
 		}
 		caixa_baixa[i] = '\0';
-		return caixa_baixa;
+		return caixa_baixa; //PRECISA DESALOCAR
 	}
 	else
 		return NULL;
 }
 
-char *strAlto(char *str, int *tam)
+char *strAlto(char *str, int tam)
 {
 	int i=0, j=0;
 	char *caixa_alta=NULL;
-	caixa_alta = (char *)malloc(*tam*sizeof(char));
+	caixa_alta = (char *)malloc(tam*sizeof(char));
 	
 	if(caixa_alta){
 		while(str[i] != '\0'){
-			for(j=0;j<*tam;j++){
+			for(j=0;j<tam;j++){
 				if ((int)str[j] >= 'a' && (int)str[j] <= 'z')
 					caixa_alta[j] = (((int)str[j])-32);
 				else
@@ -120,16 +118,16 @@ char *strAlto(char *str, int *tam)
 			i++;
 		}
 		caixa_alta[i] = '\0';
-		return caixa_alta;
+		return caixa_alta; //PRECISA DESALOCAR
 	}
 	else
 		return NULL;
 }
 
-char *strConcatena(char *str1, char *str2, int *tam){
+char *strConcatena(char *str1, char *str2, int tam){
 	int i=0, j=0;
 	char *nova = NULL;
-	nova = (char *)malloc(*tam*sizeof(char));
+	nova = (char *)malloc(tam*sizeof(char));
 	
 	if(nova){
 		while(str1[i] != '\0'){
@@ -141,7 +139,7 @@ char *strConcatena(char *str1, char *str2, int *tam){
 			j++;
 		}
 		nova[i + j] = '\0';
-		return nova;
+		return nova; //PRECISA DESALOCAR
 	}
 	else 
 		return NULL; 
