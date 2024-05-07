@@ -30,7 +30,7 @@ int main(){
 	
 	int cod=0;
 	int quant=0;
-	printf("\n\tCOMPRAR")
+	printf("\n\tCOMPRAR");
 	printf("\nCodigo do produto: ");
 	scanf("%d", &cod);
 	printf("\nQuantidade desejada: ");
