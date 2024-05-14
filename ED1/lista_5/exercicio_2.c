@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct no{
+typedef struct no{ //enderecos
     char endereco_ip[16];
     char dominio[50];
     struct no *proximo;
@@ -57,7 +57,7 @@ void imprime(NO *paux){
     }
 }
 
-void buscar_dominio(NO *p_dns, char *ip){
+void buscar_dominio(NO *p_dns, char *ip){ //arrumar com auxiliar
     if(p_dns == NULL)
     {
         printf("\nLista Vazia!");
