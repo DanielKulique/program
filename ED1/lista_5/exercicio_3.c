@@ -41,10 +41,10 @@ Agenda *cria_agenda(){
         printf("\nERRO AO ALOCAR MEMORIA NO CABECA");
         return NULL;
     }
-   
+
 }
 
-Contato *cria_lista(){
+Contato *cria_lista(){ //não é utilizado. nó cabeça de contatos, refatorar codigo.
     Contato *novo=NULL;
     novo = (Contato *)malloc(sizeof(Contato)); //primeiro no CABECA(root)
     if(novo){
@@ -92,7 +92,7 @@ void insereInicio_contato(Agenda *agenda, char *nome, char *telefone, int dia, i
     }
 }
 
-void imprime_agenda(Agenda *agenda){ 
+void imprime_agenda(Agenda *agenda){
     Contato *atual = agenda->contatos;
     if(atual == NULL){
         printf("\n\tFILA VAZIA!");
@@ -133,7 +133,7 @@ void pesquisar_contato(Agenda *agenda, char *nome){
             }
             atual = atual->prox;
         }
-        printf("\nDOMINIO NAO ENCONTRADO");
+        printf("\nUSUARIO NAO ENCONTRADO");
     }
 }
 
@@ -186,9 +186,9 @@ void liberar_agenda(Agenda *agenda){
 int main(){
     Agenda *aged_01 = NULL;
     aged_01 = cria_agenda();
-    int opcao=0;
+    int opcao=0, dia, mes;
     char nome[45], telefone[12];
-    
+
     printf("\n\t\t\tMENU");
 
     do{
@@ -197,7 +197,7 @@ int main(){
         printf("\n\t===================================\n");
         do{
             printf("\nDigite a opcao: ");
-            scanf("%d", &opcao);  
+            scanf("%d", &opcao);
             setbuf(stdin, NULL);
             if(opcao < 1 || opcao > 6)
                 printf("\nOpcao invalida, tente um valor entre 1 a 6!");
@@ -221,11 +221,12 @@ int main(){
             telefone[strcspn(telefone, "\n")] = '\0';
 
             printf("\nDia Nascimento:");
-            scanf("\n%d", &aged_01->contatos->dataAniversario.dia);
+            scanf("\n%d", &dia);
             setbuf(stdin, NULL);
             printf("\nMes Nascimento:");
-            scanf("\n%d", &aged_01->contatos->dataAniversario.mes);
+            scanf("\n%d", &mes);
             setbuf(stdin, NULL);
+            insereInicio_contato(aged_01, nome, telefone, dia, mes);
             break;
         case 3:
             printf("\nPESQUISANDO CONTATO");
