@@ -66,7 +66,7 @@ cabeca *CriaLista(){
 }
 
 void insereFila(cabeca *p, int chave){
-	cabeca *novo = (cabeca *)malloc(sizeof(cabeca));
+	cabeca *novo = (cabeca *)malloc(sizeof(cabeca)); // ISSO TA MUITO ERRADO CORRIGIR 
 	if(novo){
 		novo->chave;
 		novo->proximo = NULL;

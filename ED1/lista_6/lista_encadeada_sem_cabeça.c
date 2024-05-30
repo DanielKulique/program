@@ -13,16 +13,14 @@ void insere_inicio(NO **p, int chave);
 void imprime(NO *p);
 void insere_final(NO **p, int chave);
 void insere_meio(NO **p, int chave, int referencia); 
-void remove_meio(NO **p, int chave, int referencia);
+void remove_meio(NO **p, int referencia);
 
 int main (){
     NO *lista = NULL;
-    insere_final(&lista, 22);
-    insere_final(&lista, 16);
+
     insere_final(&lista, 27);
-    insere_final(&lista, 34);
-    insere_final(&lista, 43);
-    insere_meio(&lista, 20, 27);
+
+    remove_meio(&lista, 27);
     imprime(lista);
 
     return 0;
@@ -86,23 +84,52 @@ void insere_meio(NO **p, int chave, int referencia){
         }
         else{
             NO *aux = *p;
-            NO *anterior = NULL;
             while(aux->chave != referencia && aux->proximo != NULL){
-                anterior = aux;
                 aux = aux->proximo;
-                printf("\nesta aqui o erro");
             }
-            if(aux->proximo == NULL){
+            if(aux == NULL){ //nao foi encontrado o no
+                NO *ultimo = *p;
+                while(ultimo->proximo != NULL){
+                    ultimo = ultimo->proximo;
+                }
+                ultimo->proximo = novo_no;
+            }
+            else{ //foi encontrado o no
+                novo_no->proximo = aux->proximo;
                 aux->proximo = novo_no;
-            }
-            else{
-                novo_no->proximo = aux;
-                anterior->proximo = novo_no;
             }
         }
     }
     else{
         printf("\nERRO AO ALOCAR MEMORIA - INSERE MEIO");
     }
-
 }
+
+void remove_meio(NO **p, int referencia){
+    NO *aux = *p;
+    NO *anterior = NULL;
+    if(aux == NULL){
+        printf("\nLISTA VAZIA!");
+        return;
+    }
+    if(aux->chave == referencia){ //chave a ser retirada é o primeiro da lista // CASO ESPECIAL
+        *p = aux->proximo;
+        free(aux);
+        printf("\nNO REFENCIA RETITRADO %d", referencia);
+        return;
+    }
+    while(aux->proximo != NULL && aux->chave != referencia){
+        anterior = aux;
+        aux = aux->proximo;
+    }
+    if(aux == NULL){ //no referencia nao foi encontrado?
+        printf("\nVALOR NAO ENCONTRADO!");
+        return;
+    }
+    if(anterior != NULL){
+        anterior->proximo = aux->proximo;
+    }
+    free(aux);
+    printf("\nNO REFENCIA RETITRADO %d", referencia);
+}
+ 
