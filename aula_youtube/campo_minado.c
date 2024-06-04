@@ -23,8 +23,8 @@ int main(){
     int x, y, parar=1;
 
     Campo *ponteiro=NULL;
-    ponteiro = (Campo *)malloc(sizeof(Campo));
-    if(ponteiro){
+    ponteiro = (Campo *)malloc(sizeof(Campo)); //aloca memoria para um ponteiro tipo campo
+    if(ponteiro){ //se memoria foi alocada
         criar_matriz(ponteiro);
         imprimir_matriz(ponteiro);
         randomizar_bombas(ponteiro);
@@ -48,7 +48,7 @@ int main(){
 
 }
 
-void criar_matriz(Campo *p){
+void criar_matriz(Campo *p){ //preenche matriz
     int i=0, j=0;
     p->bombas = BOMBAS;
     for(i=0; i<LINHA; i++){
